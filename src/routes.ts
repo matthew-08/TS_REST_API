@@ -4,3 +4,5 @@ const routes = (app: Express) => {
     res.sendStatus(200);
   });
 };
+
+export default routes;
