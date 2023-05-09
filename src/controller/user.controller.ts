@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { omit } from 'lodash';
 import mongoose from 'mongoose';
 import { UserDocument } from '../models/user.model';
 import { CreateUserInput } from '../schema/user.schema';
@@ -12,7 +13,10 @@ export async function createUserHandler(
   try {
     console.log(req.body);
     const user = await createUser(req.body);
-    return res.send(user);
+    const returnUser = {
+      email: user.email,
+    };
+    return res.status(200).json(returnUser);
   } catch (error: any) {
     console.log(error);
     res.sendStatus(401).send(error.message);
