@@ -2,7 +2,7 @@ import mongoose, { HydratedDocument, Mongoose } from 'mongoose';
 import bcrpyt from 'bcrypt';
 import config from 'config';
 
-interface User extends mongoose.Document {
+export interface UserDocument extends mongoose.Document {
   email: string;
   name: string;
   password: string;
@@ -11,7 +11,7 @@ interface User extends mongoose.Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-const userSchema = new mongoose.Schema<User>(
+const userSchema = new mongoose.Schema<UserDocument>(
   {
     email: { type: String, required: true },
     name: { type: String, required: true },
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema<User>(
   }
 );
 
-userSchema.pre<User>('save', async function (next) {
+userSchema.pre<UserDocument>('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -41,5 +41,5 @@ userSchema.pre<User>('save', async function (next) {
   return next();
 });
 
-const UserModel = mongoose.model<User>('User', userSchema);
-export default UserModel;
+const UserModel = mongoose.model<UserDocument>('User', userSchema);
+export { UserModel };

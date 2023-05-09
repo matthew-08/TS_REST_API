@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import UserModel from '../models/user.model';
+import { UserDocument } from '../models/user.model';
+import { createUser } from '../service/user.service';
 
 export async function createUserHandler(
   req: Request,
@@ -9,11 +10,7 @@ export async function createUserHandler(
 ) {
   const { name, email, password } = req.body;
   try {
-    const user = await UserModel.create({
-      name,
-      email,
-      password,
-    });
+    await createUser(req.body);
   } catch (error: any) {
     console.log(error);
     res.sendStatus(401).send(error.message);

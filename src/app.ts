@@ -9,5 +9,6 @@ const app = express();
 
 app.listen(port, async () => {
   console.log(`server listening on ${port}`);
-  /* await connect() */ routes(app);
+  await connect();
+  routes(app);
 });
