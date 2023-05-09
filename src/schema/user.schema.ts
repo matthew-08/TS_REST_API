@@ -1,4 +1,4 @@
-import z, { string } from 'zod';
+import z, { string, TypeOf } from 'zod';
 
 const zUserSchema = z.object({
   body: z
@@ -14,7 +14,7 @@ const zUserSchema = z.object({
     })
     .refine(
       (data) => {
-        data.password === data.confirmPassword;
+        return data.password === data.confirmPassword;
       },
       {
         message: 'Passwords do not match',
@@ -22,3 +22,7 @@ const zUserSchema = z.object({
       }
     ),
 });
+
+export type CreateUserInput = TypeOf<typeof zUserSchema>['body'];
+
+export default zUserSchema;
