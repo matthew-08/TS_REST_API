@@ -8,6 +8,7 @@ interface User extends mongoose.Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const userSchema = new mongoose.Schema<User>(
@@ -19,7 +20,7 @@ const userSchema = new mongoose.Schema<User>(
   {
     timestamps: true,
     methods: {
-      comparePassword(candidatePassword: string) {
+      comparePassword(candidatePassword: string): Promise<boolean> {
         return bcrpyt
           .compare(candidatePassword, this.password)
           .catch((e) => false);
