@@ -18,6 +18,13 @@ const userSchema = new mongoose.Schema<User>(
   },
   {
     timestamps: true,
+    methods: {
+      comparePassword(candidatePassword: string) {
+        return bcrpyt
+          .compare(candidatePassword, this.password)
+          .catch((e) => false);
+      },
+    },
   }
 );
 
