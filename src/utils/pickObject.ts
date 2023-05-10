@@ -13,10 +13,45 @@ const pickObject = <T extends object, A extends keyof T>(
   return objToReturn;
 };
 
-const testObj = {
-  aProp: 1,
-  aProp2: 2,
-  aProp3: 3,
+export type Entity =
+  | {
+      type: 'user';
+    }
+  | {
+      type: 'post';
+    }
+  | {
+      type: 'comment';
+    };
+
+type EntityWithId = {
+  [EntityType in Entity['type']]: {
+    type: EntityType;
+  };
+}[Entity['type']];
+
+type TestThree = {
+  [E in Entity['type']]: {
+    amazing: E;
+  };
+}[Entity['type']];
+
+export const fruitCount = {
+  apple: 1,
+  pear: 4,
+  banana: 26,
 };
 
-const newObj = pickObject(testObj, ['aProp2', 'aProp3']);
+type FruitCounts = typeof fruitCount;
+
+type NewSingleFruitCount = {
+  [K in keyof FruitCounts]: {
+    [K2 in K]: number;
+  };
+}[keyof FruitCounts];
+
+type Test = {
+  apple: string;
+  pear: string;
+  banana: string;
+}[keyof FruitCounts];
