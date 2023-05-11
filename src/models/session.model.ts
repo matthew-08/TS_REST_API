@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { boolean } from 'zod';
 import { UserDocument } from './user.model';
 
-export interface SessionModel {
+interface SessionDocument {
   userId: UserDocument['_id'];
   valid: boolean;
   userAgent: string;
@@ -19,6 +19,6 @@ const sessionSchema = new mongoose.Schema(
   }
 );
 
-const SessionModel = mongoose.model<SessionModel>('User', sessionSchema);
+const SessionModel = mongoose.model<SessionModel>('Session', sessionSchema);
 
-export default SessionModel;
+export { SessionModel, SessionDocument };

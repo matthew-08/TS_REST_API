@@ -8,8 +8,7 @@ import pickObject from '../utils/pickObject';
 
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserInput>,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) {
   try {
     const user = await createUser(req.body);

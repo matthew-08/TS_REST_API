@@ -8,10 +8,11 @@ export function signJwt(object: Object, options?: jwt.SignOptions | undefined) {
   return jwt.sign(object, privateKey, {
     ...(options && options),
     algorithm: 'RS256',
+    allowInsecureKeySizes: true,
   });
 }
 
-function verifyJwt(token: string) {
+export function verifyJwt(token: string) {
   try {
     const decoded = jwt.verify(token, publicKey);
     return {

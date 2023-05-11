@@ -25,4 +25,18 @@ export async function createUserSessionHandler(req: Request, res: Response) {
       expiresIn: config.get('accessTokenTTL'), // 15 Minutes
     }
   );
+
+  const refreshToken = signJwt(
+    {
+      ...user,
+      session: session._id,
+    },
+    {
+      expiresIn: config.get('refreshTokenTTL'),
+    }
+  );
+
+  return res.send({ accessToken, refreshToken });
 }
+
+export default createUserSessionHandler;
