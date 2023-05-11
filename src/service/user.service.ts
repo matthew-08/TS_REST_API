@@ -1,6 +1,7 @@
 import mongoose, { HydratedDocument, StringExpression } from 'mongoose';
 import { UserDocument, UserModel } from '../models/user.model';
 import { CreateUserInput } from '../schema/user.schema';
+import pickObject from '../utils/pickObject';
 
 export async function createUser(input: CreateUserInput) {
   try {
@@ -24,5 +25,5 @@ export async function validatePassword({
   const isValid = await user.comparePassword(password);
   if (!isValid) {
     return false;
-  }
+  } else return pickObject(user, ['_id', 'email']);
 }
