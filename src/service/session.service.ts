@@ -5,4 +5,6 @@ export async function createSesssion(userId: string, userAgent: string) {
     userId,
     userAgent,
   });
+
+  return session.toJSON();
 }
