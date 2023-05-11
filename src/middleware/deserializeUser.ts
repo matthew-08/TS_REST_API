@@ -10,9 +10,9 @@ const deserializeUser = (req: Request, res: Response, next: NextFunction) => {
   if (!accessToken) {
     return next();
   }
-  const { decoded, expired } = verifyJwt(accessToken);
-  if (decoded) {
-    res.locals.user = decoded;
+  const { decodedPayload, expired } = verifyJwt(accessToken);
+  if (decodedPayload) {
+    res.locals.user = decodedPayload;
     return next();
   }
 };
