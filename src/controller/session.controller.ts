@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createSesssion } from '../service/session.service';
+import { createSesssion, findSessions } from '../service/session.service';
 import { validatePassword } from '../service/user.service';
 import { signJwt } from '../utils/jwt.util';
 import config from 'config';
@@ -37,6 +37,22 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   );
 
   return res.send({ accessToken, refreshToken });
+}
+
+export async function getUserSessionsHandler(
+  req: Request,
+  res: Response<
+    {},
+    {
+      user: {
+        _id: string;
+      };
+    }
+  >
+) {
+  const userId = res.locals.user._id;
+  const sessions = await findSessions({ userId: userId, valid: true });
+  return res.send(sessions);
 }
 
 export default createUserSessionHandler;
